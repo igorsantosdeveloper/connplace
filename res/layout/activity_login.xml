@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/login_txtusername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_txtusername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200px"/>
+
+    <EditText
+        android:id="@+id/login_editname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300px"
+        android:ems="10"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/login_txtpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_txtpassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="500px"/>
+
+    <EditText
+        android:id="@+id/login_editpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="600px"
+        android:ems="10"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/login_btnlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="800px"
+        android:text="@string/login_btnlogin"/>
+
+    <Button
+        android:id="@+id/login_btnregister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="910px"
+        android:text="@string/login_btnregister" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+

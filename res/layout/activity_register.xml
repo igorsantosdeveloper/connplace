@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/register_txtname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_txtregister"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/register_txtusername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_txtusername"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <EditText
+        android:id="@+id/register_editusername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="180dp"
+        android:layout_marginTop="30dp"
+        android:inputType="text"
+        android:ems="8"
+        android:layout_marginStart="180dp"/>
+
+    <TextView
+        android:id="@+id/register_txtpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_txtpassword"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"/>
+
+    <EditText
+        android:id="@+id/register_editpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="180dp"
+        android:layout_marginTop="70dp"
+        android:inputType="textPassword"
+        android:ems="8"
+        android:layout_marginStart="180dp"/>
+
+    <TextView
+        android:id="@+id/register_txtconfirmpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_txtconfirmpassword"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginStart="10dp"/>
+
+    <EditText
+        android:id="@+id/register_editconrfirmpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="180dp"
+        android:layout_marginTop="110dp"
+        android:inputType="textPassword"
+        android:ems="8"
+        android:layout_marginStart="180dp"/>
+
+    <TextView
+        android:id="@+id/register_txtage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_txtage"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginStart="10dp"/>
+
+    <Button
+        android:id="@+id/register_btnday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/register_btnday"/>
+
+    <Button
+        android:id="@+id/register_btnmonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="210dp"
+        android:text="@string/register_btnmonth"/>
+
+    <Button
+        android:id="@+id/register_btnyear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="262dp"
+        android:layout_marginTop="210dp"
+        android:text="@string/register_btnyear"
+        android:layout_marginStart="262dp"/>
+
+    <TextView
+        android:id="@+id/register_txtday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="260dp"
+        android:text="@string/register_txtday"
+        android:layout_marginStart="45dp"/>
+
+    <TextView
+        android:id="@+id/register_txtmonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="155dp"
+        android:layout_marginTop="260dp"
+        android:text="@string/register_txtmonth"
+        android:layout_marginStart="155dp"/>
+
+    <TextView
+        android:id="@+id/register_txtyear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="290dp"
+        android:layout_marginTop="260dp"
+        android:text="@string/register_txtyear"
+        android:layout_marginStart="290dp"/>
+
+    <ListView
+        android:id="@+id/register_listday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:visibility="invisible"/>
+
+    <ListView
+        android:id="@+id/register_listmonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:visibility="invisible"/>
+
+    <ListView
+        android:id="@+id/register_listyear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:visibility="invisible"/>
+
+</RelativeLayout>
+
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Connplace</string>
+    <string name="login_txtusername">Usuário</string>
+    <string name="login_txtpassword">Senha</string>
+    <string name="login_btnlogin">Entrar</string>
+    <string name="login_btnregister">Cadastre-se</string>
+    <string name="register_txtregister">Seja um novo usuário</string>
+    <string name="register_txtusername">Informar nome de usuário:</string>
+    <string name="register_txtpassword">Informar senha:</string>
+    <string name="register_txtconfirmpassword">Confirmar senha:</string>
+    <string name="register_txtage">Informar data de nascimento:</string>
+    <string name="register_btnday">Dia</string>
+    <string name="register_btnmonth">Mês</string>
+    <string name="register_btnyear">Ano</string>
+    <string name="register_txtday">01</string>
+    <string name="register_txtmonth">Janeiro</string>
+    <string name="register_txtyear">1999</string>
+</resources>
