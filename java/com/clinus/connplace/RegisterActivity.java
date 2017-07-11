@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -22,6 +23,8 @@ public class RegisterActivity extends AppCompatActivity {
     TextView txtDay;
     TextView txtMonth;
     TextView txtYear;
+    RadioButton rbSexM;
+    RadioButton rbSexF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -75,12 +78,34 @@ public class RegisterActivity extends AppCompatActivity {
         txtDay = (TextView) findViewById(R.id.register_txtday);
         txtMonth = (TextView) findViewById(R.id.register_txtmonth);
         txtYear = (TextView) findViewById(R.id.register_txtyear);
+        rbSexM = (RadioButton) findViewById(R.id.register_radiosexm);
+        rbSexF = (RadioButton) findViewById(R.id.register_radiosexf);
         ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strDays);
         days.setAdapter(adapterDays);
         ArrayAdapter<String> adapterMonths = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strMonths);
         months.setAdapter(adapterMonths);
         ArrayAdapter<String> adapterYears = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strYears);
         years.setAdapter(adapterYears);
+        rbSexM.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view){
+
+                rbSexF.setSelected(false);
+                rbSexM.setSelected(true);
+                rbSexF.setChecked(false);
+            }
+        });
+        rbSexF.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view){
+
+                rbSexM.setSelected(false);
+                rbSexF.setSelected(true);
+                rbSexM.setChecked(false);
+            }
+        });
         btnDay.setOnClickListener(new View.OnClickListener() {
 
             @Override

@@ -88,7 +88,7 @@
         android:layout_marginStart="110dp"/>
 
     <RadioButton
-        android:id="@+id/register_radiof"
+        android:id="@+id/register_radiosexf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_radiosexf"
