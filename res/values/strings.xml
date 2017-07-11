@@ -8,6 +8,9 @@
     <string name="register_txtusername">Informar nome de usuário:</string>
     <string name="register_txtpassword">Informar senha:</string>
     <string name="register_txtconfirmpassword">Confirmar senha:</string>
+    <string name="register_txtsex">Informar sexo:</string>
+    <string name="register_radiosexm">Masculino</string>
+    <string name="register_radiosexf">Feminino</string>
     <string name="register_txtage">Informar data de nascimento:</string>
     <string name="register_btnday">Dia</string>
     <string name="register_btnmonth">Mês</string>

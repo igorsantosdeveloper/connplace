@@ -70,12 +70,39 @@
         android:layout_marginStart="180dp"/>
 
     <TextView
+        android:id="@+id/register_txtsex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_txtsex"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginStart="10dp"/>
+
+    <RadioButton
+        android:id="@+id/register_radiosexm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_radiosexm"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginStart="110dp"/>
+
+    <RadioButton
+        android:id="@+id/register_radiof"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_radiosexf"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="165dp"
+        android:layout_marginStart="210dp"/>
+
+    <TextView
         android:id="@+id/register_txtage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_txtage"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="220dp"
         android:layout_marginStart="10dp"/>
 
     <Button
@@ -83,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="250dp"
         android:layout_marginStart="10dp"
         android:text="@string/register_btnday"/>
 
@@ -92,7 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="250dp"
         android:text="@string/register_btnmonth"/>
 
     <Button
@@ -100,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="262dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="250dp"
         android:text="@string/register_btnyear"
         android:layout_marginStart="262dp"/>
 
@@ -109,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="45dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="300dp"
         android:text="@string/register_txtday"
         android:layout_marginStart="45dp"/>
 
@@ -118,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="155dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="300dp"
         android:text="@string/register_txtmonth"
         android:layout_marginStart="155dp"/>
 
@@ -127,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="290dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="300dp"
         android:text="@string/register_txtyear"
         android:layout_marginStart="290dp"/>
 
@@ -135,21 +162,21 @@
         android:id="@+id/register_listday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="330dp"
         android:visibility="invisible"/>
 
     <ListView
         android:id="@+id/register_listmonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="330dp"
         android:visibility="invisible"/>
 
     <ListView
         android:id="@+id/register_listyear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="330dp"
         android:visibility="invisible"/>
 
 </RelativeLayout>
