@@ -11,9 +11,10 @@ public class Controller {
                                String password,
                                String location,
                                String age,
+                               String dateOfBirth,
                                String sex){
 
-        ModelUser user = new ModelUser(name,password,location,age,sex);
+        ModelUser user = new ModelUser(name,password,location,age,dateOfBirth,sex);
         dao.newUser(user);
     }
 }

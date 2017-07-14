@@ -212,10 +212,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
 
                     CCplaceTest dao = new CCplaceTest(RegisterActivity.this);
-                    //Será necessário adicionar uma nova coluna no banco para armazenar a data de nascimento
-                    String dateOfBirth =    txtDay.getText().toString() + "/" +
-                                            txtMonth.getText().toString() + "/" +
-                                            txtYear.getText().toString();
                     int month = 0;
                     for(int i = 0;i < strMonths.length;i++){
 
@@ -224,6 +220,9 @@ public class RegisterActivity extends AppCompatActivity {
                             month = i + 1;
                         }
                     }
+                    String dateOfBirth =    txtDay.getText().toString() + "/" +
+                                            month + "/" +
+                                            txtYear.getText().toString();
                     int age = calculatesAge(Integer.parseInt(txtDay.getText().toString()),
                                   month,
                                   Integer.parseInt(txtYear.getText().toString()));
@@ -234,6 +233,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             editPassword.getText().toString(),
                                             "Aqui",
                                             strAge,
+                                            dateOfBirth,
                                             sex);
                     Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
                     startActivity(home);
