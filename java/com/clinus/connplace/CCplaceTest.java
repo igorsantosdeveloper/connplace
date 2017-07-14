@@ -51,7 +51,7 @@ public class CCplaceTest extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(CCP_USER_NAME,user.getName().toUpperCase());
-        values.put(CCP_USER_PASSWORD,user.getPassword().toUpperCase());
+        values.put(CCP_USER_PASSWORD,user.getPassword());
         values.put(CCP_USER_LOCATION,user.getLocation().toUpperCase());
         values.put(CCP_USER_AGE,user.getAge().toUpperCase());
         values.put(CCP_USER_SEX,user.getSex().toUpperCase());

@@ -18,4 +18,5 @@
     <string name="register_txtday">01</string>
     <string name="register_txtmonth">Janeiro</string>
     <string name="register_txtyear">1999</string>
+    <string name="register_btnregister">Cadastrar</string>
 </resources>

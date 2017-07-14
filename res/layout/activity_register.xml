@@ -179,6 +179,15 @@
         android:layout_marginTop="330dp"
         android:visibility="invisible"/>
 
+    <Button
+        android:id="@+id/register_btnregister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="232dp"
+        android:text="@string/login_btnregister"
+        android:layout_marginStart="232dp"/>
+
 </RelativeLayout>
 
 
