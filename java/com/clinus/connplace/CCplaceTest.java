@@ -66,6 +66,28 @@ public class CCplaceTest extends SQLiteOpenHelper{
         db.close();
     }
 
+    public int authenticateUser(String name, String password){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(    "SELECT " +
+                                        CCP_USER_ID +
+                                        " FROM " + TABLE_CCP_USER +
+                                        " WHERE " + CCP_USER_NAME + "=" + "'" + name + "'" +
+                                        " AND " + CCP_USER_PASSWORD + "=" + "'" + password + "'", null);
+
+        while(cursor.moveToNext()){
+
+            int id = cursor.getInt(0);
+            db.close();
+            cursor.close();
+            if(id > -1)
+                return id;
+        }
+
+        return -1;
+    }
+
+    //Teste de listagem de usuário
     public ArrayList<String> getUsers(){
 
         String coluns[] = {
@@ -96,6 +118,7 @@ public class CCplaceTest extends SQLiteOpenHelper{
 
             namesUsers.add(users.get(i).getName());
         }
+        cursor.close();
         return namesUsers;
     }
 }

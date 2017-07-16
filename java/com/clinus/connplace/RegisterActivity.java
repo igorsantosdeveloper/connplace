@@ -286,7 +286,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void finishRegistration(){
 
-        CCplaceTest dao = new CCplaceTest(RegisterActivity.this);
         String dateOfBirth =    txtDay.getText().toString() + "/" +
                 getMonth() + "/" +
                 txtYear.getText().toString();
@@ -295,7 +294,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Integer.parseInt(txtYear.getText().toString()));
         String strAge = "" + age;
         Controller action = new Controller();
-        action.controllerUser(  dao,
+        action.newUser(  RegisterActivity.this,
                 editUserName.getText().toString(),
                 editPassword.getText().toString(),
                 //Temporário
