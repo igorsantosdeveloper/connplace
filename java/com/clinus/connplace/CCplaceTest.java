@@ -87,6 +87,27 @@ public class CCplaceTest extends SQLiteOpenHelper{
         return -1;
     }
 
+    public int checkNameUser(String name){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(    "SELECT " +
+                                        CCP_USER_ID +
+                                        " FROM " + TABLE_CCP_USER +
+                                        " WHERE " + CCP_USER_NAME + "=" + "'" + name + "'",null);
+
+        while(cursor.moveToNext()){
+
+            int id = cursor.getInt(0);
+            db.close();
+            cursor.close();
+            if(id > -1)
+                return id;
+        }
+
+        return -1;
+
+    }
+
     //Teste de listagem de usuário
     public ArrayList<String> getUsers(){
 

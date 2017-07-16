@@ -8,6 +8,7 @@ public class Message {
     private final String nullFields;
     private final String ok;
     private final String invalidLogin;
+    private final String existingUser;
 
     public Message(){
 
@@ -16,7 +17,8 @@ public class Message {
         passwordsDoNotMatch = "As senhas não correspondem!";
         nullFields = "Campos nulos!";
         ok = "OK";
-        invalidLogin = "Usuário e/ou senha inválido(s)";
+        invalidLogin = "Usuário e/ou senha inválido(s)!";
+        existingUser = "Este Nome de usuário já está em uso!";
     }
 
     public String getAttentionMessage() {
@@ -38,4 +40,6 @@ public class Message {
     public String getOk(){ return ok; }
 
     public String getInvalidLogin(){ return invalidLogin; }
+
+    public String getExistingUser(){ return existingUser; }
 }

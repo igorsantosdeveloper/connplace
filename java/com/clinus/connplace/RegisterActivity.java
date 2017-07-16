@@ -57,8 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        createDays();
-        createYears();
         createElements();
         rbSexM.setOnClickListener(new View.OnClickListener(){
 
@@ -146,19 +144,26 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!validateDate(txtDay.getText().toString(),txtMonth.getText().toString())){
 
-                    showInvalid(msg.getAttentionMessage(),msg.getInvalidDate());
+                    showInvalid(msg.getInvalidDate());
                 }else if(!editPassword.getText().toString().equals(editConfirmPassword.getText().toString())){
 
-                    showInvalid(msg.getAttentionMessage(),msg.getPasswordsDoNotMatch());
+                    showInvalid(msg.getPasswordsDoNotMatch());
                 }else if(editUserName.getText().toString().equals("") ||
                          !rbSexF.isChecked() &&
                          !rbSexM.isChecked() ||
                          editPassword.getText().toString().equals("")){
 
-                    showInvalid(msg.getAttentionMessage(),msg.getNullFields());
-                }else{
+                    showInvalid(msg.getNullFields());
+                } else{
 
-                    finishRegistration();
+                    Controller action = new Controller();
+                    if(action.checkNameUser(RegisterActivity.this,editUserName.getText().toString()) == -1) {
+
+                        finishRegistration();
+                    }else{
+
+                        showInvalid(msg.getExistingUser());
+                    }
                 }
             }
         });
@@ -187,10 +192,6 @@ public class RegisterActivity extends AppCompatActivity {
         months.setAdapter(adapterMonths);
         ArrayAdapter<String> adapterYears = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strYears);
         years.setAdapter(adapterYears);
-    }
-
-    public void createDays(){
-
         for(int i = 0;i < strDays.length;i++){
 
             String str;
@@ -204,10 +205,6 @@ public class RegisterActivity extends AppCompatActivity {
             str += i+1;
             strDays[i] = str;
         }
-    }
-
-    public void createYears(){
-
         Calendar cal = Calendar.getInstance();
         int intYear = cal.get(Calendar.YEAR);
         for(int i = 0;i < strYears.length;i++){
@@ -273,11 +270,11 @@ public class RegisterActivity extends AppCompatActivity {
         return month;
     }
 
-    public void showInvalid(String str, String str2){
+    public void showInvalid(String str){
 
         AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
         alert.setTitle(str);
-        alert.setMessage(str2);
+        alert.setMessage(msg.getAttentionMessage());
         alert.setPositiveButton(msg.getOk(), null);
         alert.create();
         alert.show();

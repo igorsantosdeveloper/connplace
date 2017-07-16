@@ -22,4 +22,10 @@ public class Controller {
         CCplaceTest dao = new CCplaceTest(context);
         return dao.authenticateUser(name,password);
     }
+
+    public int checkNameUser(Context context, String name){
+
+        CCplaceTest dao = new CCplaceTest(context);
+        return dao.checkNameUser(name.toUpperCase());
+    }
 }
