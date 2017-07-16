@@ -2,8 +2,11 @@ package com.clinus.connplace;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 public class CCplaceTest extends SQLiteOpenHelper{
 
@@ -47,6 +50,8 @@ public class CCplaceTest extends SQLiteOpenHelper{
         onCreate(sqLiteDatabase);
     }
 
+    //DAO...
+
     public void newUser(ModelUser user){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -59,6 +64,39 @@ public class CCplaceTest extends SQLiteOpenHelper{
         values.put(CCP_USER_SEX,user.getSex().toUpperCase());
         db.insert(TABLE_CCP_USER,null,values);
         db.close();
+    }
+
+    public ArrayList<String> getUsers(){
+
+        String coluns[] = {
+
+                CCP_USER_ID,
+                CCP_USER_NAME,
+                CCP_USER_PASSWORD,
+                CCP_USER_LOCATION,
+                CCP_USER_AGE,
+                CCP_USER_DATEOFBIRTH,
+                CCP_USER_SEX
+        };
+        Cursor cursor = getWritableDatabase().query(TABLE_CCP_USER,coluns,null,null,null,null,null,null);
+        ArrayList<ModelUser> users = new ArrayList<>();
+        while(cursor.moveToNext()){
+
+            users.add(new ModelUser(
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6)
+            ));
+        }
+        ArrayList<String>namesUsers = new ArrayList<String>();
+        for(int i = 0;i < users.size();i++){
+
+            namesUsers.add(users.get(i).getName());
+        }
+        return namesUsers;
     }
 }
 

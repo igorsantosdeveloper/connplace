@@ -17,23 +17,24 @@ import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    ListView days;
-    ListView months;
-    ListView years;
-    Button btnDay;
-    Button btnMonth;
-    Button btnYear;
-    Button btnRegister;
-    TextView txtDay;
-    TextView txtMonth;
-    TextView txtYear;
-    RadioButton rbSexM;
-    RadioButton rbSexF;
-    EditText editUserName;
-    EditText editPassword;
-    EditText editConfirmPassword;
-    String sex = "";
-    String [] strMonths =  {
+    private ListView days;
+    private ListView months;
+    private ListView years;
+    private Button btnDay;
+    private Button btnMonth;
+    private Button btnYear;
+    private Button btnRegister;
+    private TextView txtDay;
+    private TextView txtMonth;
+    private TextView txtYear;
+    private RadioButton rbSexM;
+    private RadioButton rbSexF;
+    private EditText editUserName;
+    private EditText editPassword;
+    private EditText editConfirmPassword;
+    private String sex = "";
+    private String [] strMonths =  {
+
             "Janeiro",
             "Fevereiro",
             "Março",
@@ -47,57 +48,18 @@ public class RegisterActivity extends AppCompatActivity {
             "Novembro",
             "Dezembro"
     };
-    String [] strDays = new String [31];
-    String [] strYears = new String[100];
+    private String [] strDays = new String [31];
+    private String [] strYears = new String[100];
+    private final Message msg = new Message();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Calendar cal = Calendar.getInstance();
-        int intYear = cal.get(Calendar.YEAR);
-        for(int i = 0;i < strDays.length;i++){
-
-            String str;
-            if(i < 9) {
-
-                 str = "0";
-            }else{
-
-                str = "";
-            }
-            str += i+1;
-            strDays[i] = str;
-        }
-        for(int i = 0;i < strYears.length;i++){
-
-            String strYear = "";
-            strYear += intYear;
-            strYears[i] = strYear;
-            intYear--;
-        }
-        days = (ListView) findViewById(R.id.register_listday);
-        months = (ListView) findViewById(R.id.register_listmonth);
-        years = (ListView) findViewById(R.id.register_listyear);
-        btnDay = (Button) findViewById(R.id.register_btnday);
-        btnMonth = (Button) findViewById(R.id.register_btnmonth);
-        btnYear = (Button) findViewById(R.id.register_btnyear);
-        btnRegister = (Button) findViewById(R.id.register_btnregister);
-        txtDay = (TextView) findViewById(R.id.register_txtday);
-        txtMonth = (TextView) findViewById(R.id.register_txtmonth);
-        txtYear = (TextView) findViewById(R.id.register_txtyear);
-        rbSexM = (RadioButton) findViewById(R.id.register_radiosexm);
-        rbSexF = (RadioButton) findViewById(R.id.register_radiosexf);
-        editUserName = (EditText) findViewById(R.id.register_editusername);
-        editPassword = (EditText) findViewById(R.id.register_editpassword);
-        editConfirmPassword = (EditText) findViewById(R.id.register_editconrfirmpassword);
-        ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strDays);
-        days.setAdapter(adapterDays);
-        ArrayAdapter<String> adapterMonths = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strMonths);
-        months.setAdapter(adapterMonths);
-        ArrayAdapter<String> adapterYears = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strYears);
-        years.setAdapter(adapterYears);
+        createDays();
+        createYears();
+        createElements();
         rbSexM.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -184,62 +146,77 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!validateDate(txtDay.getText().toString(),txtMonth.getText().toString())){
 
-                    AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
-                    alert.setTitle("Atenção");
-                    alert.setMessage("Data inválida!");
-                    alert.setPositiveButton("OK", null);
-                    alert.create();
-                    alert.show();
+                    showInvalid(msg.getAttentionMessage(),msg.getInvalidDate());
                 }else if(!editPassword.getText().toString().equals(editConfirmPassword.getText().toString())){
 
-                    AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
-                    alert.setTitle("Atenção");
-                    alert.setMessage("As senhas não conferem");
-                    alert.setPositiveButton("OK", null);
-                    alert.create();
-                    alert.show();
+                    showInvalid(msg.getAttentionMessage(),msg.getPasswordsDoNotMatch());
                 }else if(editUserName.getText().toString().equals("") ||
-                         rbSexF.getText().toString().equals("") &&
-                         rbSexM.getText().toString().equals("") ||
+                         !rbSexF.isChecked() &&
+                         !rbSexM.isChecked() ||
                          editPassword.getText().toString().equals("")){
 
-                    AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
-                    alert.setTitle("Atenção");
-                    alert.setMessage("campos nulos");
-                    alert.setPositiveButton("OK", null);
-                    alert.create();
-                    alert.show();
+                    showInvalid(msg.getAttentionMessage(),msg.getNullFields());
                 }else{
 
-                    CCplaceTest dao = new CCplaceTest(RegisterActivity.this);
-                    int month = 0;
-                    for(int i = 0;i < strMonths.length;i++){
-
-                        if(txtMonth.getText().toString().equals(strMonths[i])){
-
-                            month = i + 1;
-                        }
-                    }
-                    String dateOfBirth =    txtDay.getText().toString() + "/" +
-                                            month + "/" +
-                                            txtYear.getText().toString();
-                    int age = calculatesAge(Integer.parseInt(txtDay.getText().toString()),
-                                  month,
-                                  Integer.parseInt(txtYear.getText().toString()));
-                    String strAge = "" + age;
-                    Controller action = new Controller();
-                    action.controllerUser(  dao,
-                                            editUserName.getText().toString(),
-                                            editPassword.getText().toString(),
-                                            "Aqui",
-                                            strAge,
-                                            dateOfBirth,
-                                            sex);
-                    Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
-                    startActivity(home);
+                    finishRegistration();
                 }
             }
         });
+    }
+
+    public void createElements(){
+
+        days = (ListView) findViewById(R.id.register_listday);
+        months = (ListView) findViewById(R.id.register_listmonth);
+        years = (ListView) findViewById(R.id.register_listyear);
+        btnDay = (Button) findViewById(R.id.register_btnday);
+        btnMonth = (Button) findViewById(R.id.register_btnmonth);
+        btnYear = (Button) findViewById(R.id.register_btnyear);
+        btnRegister = (Button) findViewById(R.id.register_btnregister);
+        txtDay = (TextView) findViewById(R.id.register_txtday);
+        txtMonth = (TextView) findViewById(R.id.register_txtmonth);
+        txtYear = (TextView) findViewById(R.id.register_txtyear);
+        rbSexM = (RadioButton) findViewById(R.id.register_radiosexm);
+        rbSexF = (RadioButton) findViewById(R.id.register_radiosexf);
+        editUserName = (EditText) findViewById(R.id.register_editusername);
+        editPassword = (EditText) findViewById(R.id.register_editpassword);
+        editConfirmPassword = (EditText) findViewById(R.id.register_editconrfirmpassword);
+        ArrayAdapter<String> adapterDays = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strDays);
+        days.setAdapter(adapterDays);
+        ArrayAdapter<String> adapterMonths = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strMonths);
+        months.setAdapter(adapterMonths);
+        ArrayAdapter<String> adapterYears = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,strYears);
+        years.setAdapter(adapterYears);
+    }
+
+    public void createDays(){
+
+        for(int i = 0;i < strDays.length;i++){
+
+            String str;
+            if(i < 9) {
+
+                str = "0";
+            }else{
+
+                str = "";
+            }
+            str += i+1;
+            strDays[i] = str;
+        }
+    }
+
+    public void createYears(){
+
+        Calendar cal = Calendar.getInstance();
+        int intYear = cal.get(Calendar.YEAR);
+        for(int i = 0;i < strYears.length;i++){
+
+            String strYear = "";
+            strYear += intYear;
+            strYears[i] = strYear;
+            intYear--;
+        }
     }
 
     public boolean validateDate(String day,String month){
@@ -256,7 +233,7 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    public int calculatesAge(int day, int month, int year){
+    public int getAge(int day, int month, int year){
 
         Calendar cal = Calendar.getInstance();
         int calDay = cal.get(Calendar.DAY_OF_MONTH);
@@ -280,6 +257,54 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
         return age;
+    }
+
+    public int getMonth(){
+
+        int month = 0;
+        for(int i = 0;i < strMonths.length;i++){
+
+            if(txtMonth.getText().toString().equals(strMonths[i])){
+
+                month = i + 1;
+            }
+        }
+
+        return month;
+    }
+
+    public void showInvalid(String str, String str2){
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(RegisterActivity.this);
+        alert.setTitle(str);
+        alert.setMessage(str2);
+        alert.setPositiveButton(msg.getOk(), null);
+        alert.create();
+        alert.show();
+
+    }
+
+    public void finishRegistration(){
+
+        CCplaceTest dao = new CCplaceTest(RegisterActivity.this);
+        String dateOfBirth =    txtDay.getText().toString() + "/" +
+                getMonth() + "/" +
+                txtYear.getText().toString();
+        int age = getAge(   Integer.parseInt(txtDay.getText().toString()),
+                getMonth(),
+                Integer.parseInt(txtYear.getText().toString()));
+        String strAge = "" + age;
+        Controller action = new Controller();
+        action.controllerUser(  dao,
+                editUserName.getText().toString(),
+                editPassword.getText().toString(),
+                //Temporário
+                "Aqui",
+                strAge,
+                dateOfBirth,
+                sex);
+        Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
+        startActivity(home);
     }
 }
 
