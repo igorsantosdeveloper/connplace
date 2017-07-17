@@ -154,7 +154,10 @@ public class RegisterActivity extends AppCompatActivity {
                          editPassword.getText().toString().equals("")){
 
                     showInvalid(msg.getNullFields());
-                } else{
+                }else if(validateNameUser(editUserName.getText().toString())){
+
+                    showInvalid(msg.getInvalidCaracter());
+                }else{
 
                     Controller action = new Controller();
                     if(action.checkNameUser(RegisterActivity.this,editUserName.getText().toString()) == -1) {
@@ -301,6 +304,24 @@ public class RegisterActivity extends AppCompatActivity {
                 sex);
         Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
         startActivity(home);
+    }
+
+    public boolean validateNameUser(String name){
+
+        String invalidCaracters[] = {"'","!","#","$","%","¢","¬","&","*",
+                                     "(",")","-","+","=","§","{","[","ª",
+                                     "}","]","º",",",".","<",">",";",":",
+                                     "|","/","?","°","Ã","Â","Á","À","Ẽ",
+                                     "Ê","É","È","Ĩ","Î","Í","Ì","Õ","Ô",
+                                     "Ó","Ò","Ũ","Û","Ú","Ù"," "};
+        for(int i = 0;i < invalidCaracters.length;i++){
+
+            if(name.contains(invalidCaracters[i])){
+
+                return true;
+            }
+        }
+        return false;
     }
 }
 

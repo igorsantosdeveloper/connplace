@@ -9,6 +9,7 @@ public class Message {
     private final String ok;
     private final String invalidLogin;
     private final String existingUser;
+    private final String invalidCaracter;
 
     public Message(){
 
@@ -19,6 +20,7 @@ public class Message {
         ok = "OK";
         invalidLogin = "Usuário e/ou senha inválido(s)!";
         existingUser = "Este Nome de usuário já está em uso!";
+        invalidCaracter = "O nome de usuário não pode conter caracteres especiais que não sejam _ ou @ ";
     }
 
     public String getAttentionMessage() {
@@ -42,4 +44,6 @@ public class Message {
     public String getInvalidLogin(){ return invalidLogin; }
 
     public String getExistingUser(){ return existingUser; }
+
+    public String getInvalidCaracter(){ return invalidCaracter; }
 }
