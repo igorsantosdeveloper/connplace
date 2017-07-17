@@ -157,6 +157,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }else if(validateNameUser(editUserName.getText().toString())){
 
                     showInvalid(msg.getInvalidCaracter());
+                }else if(editPassword.getText().toString().length() < 5){
+
+                    showInvalid(msg.getWeakPassword());
                 }else{
 
                     Controller action = new Controller();

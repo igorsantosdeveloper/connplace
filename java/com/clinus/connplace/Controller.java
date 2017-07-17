@@ -20,7 +20,7 @@ public class Controller {
     public int authenticateUser(Context context, String name, String password){
 
         CCplaceTest dao = new CCplaceTest(context);
-        return dao.authenticateUser(name,password);
+        return dao.authenticateUser(name.toUpperCase(),password);
     }
 
     public int checkNameUser(Context context, String name){

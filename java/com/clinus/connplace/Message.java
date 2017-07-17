@@ -10,6 +10,7 @@ public class Message {
     private final String invalidLogin;
     private final String existingUser;
     private final String invalidCaracter;
+    private final String weakPassword;
 
     public Message(){
 
@@ -21,6 +22,7 @@ public class Message {
         invalidLogin = "Usuário e/ou senha inválido(s)!";
         existingUser = "Este Nome de usuário já está em uso!";
         invalidCaracter = "O nome de usuário não pode conter caracteres especiais que não sejam _ ou @ ";
+        weakPassword = "Senha fraca!";
     }
 
     public String getAttentionMessage() {
@@ -46,4 +48,6 @@ public class Message {
     public String getExistingUser(){ return existingUser; }
 
     public String getInvalidCaracter(){ return invalidCaracter; }
+
+    public String getWeakPassword(){ return weakPassword; }
 }
