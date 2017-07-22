@@ -1,7 +1,10 @@
 package com.clinus.connplace;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Calendar;
 
@@ -33,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editPassword;
     private EditText editConfirmPassword;
     private String sex = "";
-    private String [] strMonths =  {
+    private String[] strMonths = {
 
             "Janeiro",
             "Fevereiro",
@@ -48,20 +55,20 @@ public class RegisterActivity extends AppCompatActivity {
             "Novembro",
             "Dezembro"
     };
-    private String [] strDays = new String [31];
-    private String [] strYears = new String[100];
+    private String[] strDays = new String[31];
+    private String[] strYears = new String[100];
     private final Message msg = new Message();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         createElements();
-        rbSexM.setOnClickListener(new View.OnClickListener(){
+        rbSexM.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 rbSexF.setSelected(false);
                 rbSexM.setSelected(true);
@@ -69,10 +76,10 @@ public class RegisterActivity extends AppCompatActivity {
                 sex = rbSexM.getText().toString();
             }
         });
-        rbSexF.setOnClickListener(new View.OnClickListener(){
+        rbSexF.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 rbSexM.setSelected(false);
                 rbSexF.setSelected(true);
@@ -100,29 +107,29 @@ public class RegisterActivity extends AppCompatActivity {
                 months.setVisibility(View.VISIBLE);
             }
         });
-        btnYear.setOnClickListener(new View.OnClickListener(){
+        btnYear.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 days.setVisibility(View.INVISIBLE);
                 months.setVisibility(View.INVISIBLE);
                 years.setVisibility(View.VISIBLE);
             }
         });
-        days.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        days.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,long id){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 txtDay.setText(((TextView) view).getText().toString());
                 days.setVisibility(View.INVISIBLE);
             }
         });
-        months.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        months.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 txtMonth.setText(((TextView) view).getText().toString());
                 months.setVisibility(View.INVISIBLE);
@@ -140,33 +147,33 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                if(!validateDate(txtDay.getText().toString(),txtMonth.getText().toString())){
+                if (!validateDate(txtDay.getText().toString(), txtMonth.getText().toString())) {
 
                     showInvalid(msg.getInvalidDate());
-                }else if(!editPassword.getText().toString().equals(editConfirmPassword.getText().toString())){
+                } else if (!editPassword.getText().toString().equals(editConfirmPassword.getText().toString())) {
 
                     showInvalid(msg.getPasswordsDoNotMatch());
-                }else if(editUserName.getText().toString().equals("") ||
-                         !rbSexF.isChecked() &&
-                         !rbSexM.isChecked() ||
-                         editPassword.getText().toString().equals("")){
+                } else if (editUserName.getText().toString().equals("") ||
+                        !rbSexF.isChecked() &&
+                                !rbSexM.isChecked() ||
+                        editPassword.getText().toString().equals("")) {
 
                     showInvalid(msg.getNullFields());
-                }else if(validateNameUser(editUserName.getText().toString())){
+                } else if (validateNameUser(editUserName.getText().toString())) {
 
                     showInvalid(msg.getInvalidCaracter());
-                }else if(editPassword.getText().toString().length() < 5){
+                } else if (editPassword.getText().toString().length() < 5) {
 
                     showInvalid(msg.getWeakPassword());
-                }else{
+                } else {
 
                     Controller action = new Controller();
-                    if(action.checkNameUser(RegisterActivity.this,editUserName.getText().toString()) == -1) {
+                    if (action.checkNameUser(RegisterActivity.this, editUserName.getText().toString()) == -1) {
 
                         finishRegistration();
-                    }else{
+                    } else {
 
                         showInvalid(msg.getExistingUser());
                     }
