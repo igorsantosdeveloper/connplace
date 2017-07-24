@@ -307,8 +307,6 @@ public class RegisterActivity extends AppCompatActivity {
         action.newUser(  RegisterActivity.this,
                 editUserName.getText().toString(),
                 editPassword.getText().toString(),
-                //Temporário
-                "Aqui",
                 strAge,
                 dateOfBirth,
                 sex);

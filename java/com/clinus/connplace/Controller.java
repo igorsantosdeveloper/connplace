@@ -7,12 +7,11 @@ public class Controller {
     public void newUser(Context context,
                         String name,
                         String password,
-                        String location,
                         String age,
                         String dateOfBirth,
                         String sex){
 
-        ModelUser user = new ModelUser(name,password,location,age,dateOfBirth,sex);
+        ModelUser user = new ModelUser(name,password,age,dateOfBirth,sex);
         CCplaceTest dao = new CCplaceTest(context);
         dao.newUser(user);
     }

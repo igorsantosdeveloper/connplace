@@ -10,16 +10,22 @@ import java.util.ArrayList;
 
 public class CCplaceTest extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "CCPLACE_TEST";
     private static final String TABLE_CCP_USER = "CCP_USER";
     private static final String CCP_USER_ID = "USER_ID";
     private static final String CCP_USER_NAME = "USER_NAME";
     private static final String CCP_USER_PASSWORD = "USER_PASSWORD";
-    private static final String CCP_USER_LOCATION = "USER_LOCATION";
     private static final String CCP_USER_AGE = "USER_AGE";
     private static final String CCP_USER_DATEOFBIRTH = "USER_DATEOFBIRTH";
     private static final String CCP_USER_SEX = "USER_SEX";
+    private static final String TABLE_CCP_LOCATION = "CCP_LOCATION";
+    private static final String CCP_LOCATION_ID = "LOCATION_ID";
+    private static final String CCP_LOCATION_LATITUDE = "LOCATION_LATITUDE";
+    private static final String CCP_LOCATION_LONGITUDE = "LOCATION_LONGITUDE";
+    private static final String CCP_LOCATION_USER_ID = "LOCATION_USER_ID";
+    private static final String CCP_LOCATION_USER_FOREIGNKEY =
+            "FOREIGN KEY"+"(" + CCP_LOCATION_USER_ID + ")" +  " REFERENCES " + TABLE_CCP_USER + "(" + CCP_USER_ID + ")";
 
     public CCplaceTest(Context context) {
 
@@ -29,16 +35,22 @@ public class CCplaceTest extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String query =  "CREATE TABLE "     +       TABLE_CCP_USER               +
-                        "("                                                      +
-                        CCP_USER_ID          +       " INTEGER PRIMARY KEY,"     +
-                        CCP_USER_NAME        +       " TEXT,"                    +
-                        CCP_USER_PASSWORD    +       " TEXT,"                    +
-                        CCP_USER_LOCATION    +       " TEXT,"                    +
-                        CCP_USER_AGE         +       " TEXT,"                    +
-                        CCP_USER_SEX         +       " TEXT,"                    +
-                        CCP_USER_DATEOFBIRTH +       " TEXT "                    +
-                        ")";
+        String query =
+                        "CREATE TABLE " + TABLE_CCP_USER + "(" +
+                        CCP_USER_ID + " INTEGER PRIMARY KEY," +
+                        CCP_USER_NAME + " TEXT," +
+                        CCP_USER_PASSWORD + " TEXT," +
+                        CCP_USER_AGE + " TEXT," +
+                        CCP_USER_SEX + " TEXT," +
+                        CCP_USER_DATEOFBIRTH + " TEXT " +
+                        ");" +
+                        " CREATE TABLE " + TABLE_CCP_LOCATION + "(" +
+                        CCP_LOCATION_ID + " INTEGER PRIMARY KEY," +
+                        CCP_LOCATION_LATITUDE + " REAL," +
+                        CCP_LOCATION_LONGITUDE + " REAL," +
+                        CCP_LOCATION_USER_ID + "INTEGER," +
+                        CCP_LOCATION_USER_FOREIGNKEY +
+                        ");";
         db.execSQL(query);
     }
 
@@ -58,7 +70,6 @@ public class CCplaceTest extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(CCP_USER_NAME,user.getName().toUpperCase());
         values.put(CCP_USER_PASSWORD,user.getPassword());
-        values.put(CCP_USER_LOCATION,user.getLocation().toUpperCase());
         values.put(CCP_USER_AGE,user.getAge().toUpperCase());
         values.put(CCP_USER_DATEOFBIRTH,user.getDateOfBirth().toUpperCase());
         values.put(CCP_USER_SEX,user.getSex().toUpperCase());
@@ -116,7 +127,6 @@ public class CCplaceTest extends SQLiteOpenHelper{
                 CCP_USER_ID,
                 CCP_USER_NAME,
                 CCP_USER_PASSWORD,
-                CCP_USER_LOCATION,
                 CCP_USER_AGE,
                 CCP_USER_DATEOFBIRTH,
                 CCP_USER_SEX
@@ -130,8 +140,7 @@ public class CCplaceTest extends SQLiteOpenHelper{
                     cursor.getString(2),
                     cursor.getString(3),
                     cursor.getString(4),
-                    cursor.getString(5),
-                    cursor.getString(6)
+                    cursor.getString(5)
             ));
         }
         ArrayList<String>namesUsers = new ArrayList<String>();
