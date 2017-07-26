@@ -19,6 +19,14 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity{
 
     private ListView users;
+    private static boolean loggingIn;
+
+    public static void setLoggingIn(boolean loggingIn){
+
+        HomeActivity.loggingIn = loggingIn;
+    }
+
+    public static boolean isLoggingIn(){ return HomeActivity.loggingIn; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

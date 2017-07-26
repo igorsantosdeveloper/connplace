@@ -27,4 +27,16 @@ public class Controller {
         CCplaceTest dao = new CCplaceTest(context);
         return dao.checkNameUser(name.toUpperCase());
     }
+
+    public int getIdUser(Context context,String user){
+
+        CCplaceTest dao = new CCplaceTest(context);
+        return dao.getIdUser(user);
+    }
+
+    public void newLocation(Context context,ModelLocation location){
+
+        CCplaceTest dao = new CCplaceTest(context);
+        dao.newLocation(location);
+    }
 }

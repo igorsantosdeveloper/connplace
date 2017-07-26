@@ -58,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String[] strDays = new String[31];
     private String[] strYears = new String[100];
     private final Message msg = new Message();
+    private static String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +183,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    public static String getUser(){ return user; }
+
     public void createElements(){
 
         days = (ListView) findViewById(R.id.register_listday);
@@ -243,6 +246,24 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean validateNameUser(String name){
+
+        String invalidCaracters[] = {"'","!","#","$","%","¢","¬","&","*",
+                "(",")","-","+","=","§","{","[","ª",
+                "}","]","º",",",".","<",">",";",":",
+                "|","/","?","°","Ã","Â","Á","À","Ẽ",
+                "Ê","É","È","Ĩ","Î","Í","Ì","Õ","Ô",
+                "Ó","Ò","Ũ","Û","Ú","Ù"," "};
+        for(int i = 0;i < invalidCaracters.length;i++){
+
+            if(name.contains(invalidCaracters[i])){
+
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getAge(int day, int month, int year){
 
         Calendar cal = Calendar.getInstance();
@@ -294,7 +315,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void finishRegistration(){
+    public void mountNewUser(){
 
         String dateOfBirth =    txtDay.getText().toString() + "/" +
                 getMonth() + "/" +
@@ -310,26 +331,22 @@ public class RegisterActivity extends AppCompatActivity {
                 strAge,
                 dateOfBirth,
                 sex);
-        Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
-        startActivity(home);
     }
 
-    public boolean validateNameUser(String name){
+    public void finishRegistration(){
 
-        String invalidCaracters[] = {"'","!","#","$","%","¢","¬","&","*",
-                                     "(",")","-","+","=","§","{","[","ª",
-                                     "}","]","º",",",".","<",">",";",":",
-                                     "|","/","?","°","Ã","Â","Á","À","Ẽ",
-                                     "Ê","É","È","Ĩ","Î","Í","Ì","Õ","Ô",
-                                     "Ó","Ò","Ũ","Û","Ú","Ù"," "};
-        for(int i = 0;i < invalidCaracters.length;i++){
+        user = editUserName.getText().toString().toUpperCase();
+        mountNewUser();
+        transfer();
+    }
 
-            if(name.contains(invalidCaracters[i])){
+    public void transfer(){
 
-                return true;
-            }
-        }
-        return false;
+        ToLocate locate = new ToLocate(this);
+        locate.bringLocation();
+        HomeActivity.setLoggingIn(false);
+        Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
+        startActivity(home);
     }
 }
 

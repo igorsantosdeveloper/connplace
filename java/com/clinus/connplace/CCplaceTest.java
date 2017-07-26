@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class CCplaceTest extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 12;
     private static final String DATABASE_NAME = "CCPLACE_TEST";
     private static final String TABLE_CCP_USER = "CCP_USER";
     private static final String CCP_USER_ID = "USER_ID";
@@ -43,15 +43,19 @@ public class CCplaceTest extends SQLiteOpenHelper{
                         CCP_USER_AGE + " TEXT," +
                         CCP_USER_SEX + " TEXT," +
                         CCP_USER_DATEOFBIRTH + " TEXT " +
-                        ");" +
-                        " CREATE TABLE " + TABLE_CCP_LOCATION + "(" +
-                        CCP_LOCATION_ID + " INTEGER PRIMARY KEY," +
-                        CCP_LOCATION_LATITUDE + " REAL," +
-                        CCP_LOCATION_LONGITUDE + " REAL," +
-                        CCP_LOCATION_USER_ID + "INTEGER," +
-                        CCP_LOCATION_USER_FOREIGNKEY +
                         ");";
+
+        String query2 =
+                " CREATE TABLE " + TABLE_CCP_LOCATION + "(" +
+                CCP_LOCATION_ID + " INTEGER PRIMARY KEY," +
+                CCP_LOCATION_LATITUDE + " REAL," +
+                CCP_LOCATION_LONGITUDE + " REAL," +
+                CCP_LOCATION_USER_ID + " INTEGER," +
+                CCP_LOCATION_USER_FOREIGNKEY +
+                ");";
+
         db.execSQL(query);
+        db.execSQL(query2);
     }
 
     @Override
@@ -64,6 +68,7 @@ public class CCplaceTest extends SQLiteOpenHelper{
 
     //DAO...
 
+    //User
     public void newUser(ModelUser user){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -117,6 +122,37 @@ public class CCplaceTest extends SQLiteOpenHelper{
 
         return -1;
 
+    }
+
+    //Location
+    public void newLocation(ModelLocation location){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(CCP_LOCATION_LATITUDE,location.getLatitude());
+        values.put(CCP_LOCATION_LONGITUDE,location.getLongitude());
+        values.put(CCP_LOCATION_USER_ID,location.getIdUser());
+        db.insert(TABLE_CCP_LOCATION,null,values);
+        db.close();
+    }
+
+    public int getIdUser(String user){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " +
+                CCP_USER_ID +
+                " FROM " + TABLE_CCP_USER +
+                " WHERE " + CCP_USER_NAME + "=" + "'" + user + "'",null);
+
+        while(cursor.moveToNext()) {
+
+            int id = cursor.getInt(0);
+            db.close();
+            cursor.close();
+            if (id > -1)
+                return id;
+        }
+        return -1;
     }
 
     //Teste de listagem de usuário
