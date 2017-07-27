@@ -49,14 +49,23 @@ public class ToLocate {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
 
-                            ModelLocation.setLatitude(location.getLatitude());
-                            ModelLocation.setLongitude(location.getLongitude());
                             Controller action = new Controller();
                             userloggedIn = RegisterActivity.getUser();
                             ModelLocation modelLocation = new ModelLocation(action.getIdUser(context,userloggedIn));
                             if(!HomeActivity.isLoggingIn()) {
 
+                                ModelLocation.setLatitude(location.getLatitude());
+                                ModelLocation.setLongitude(location.getLongitude());
                                 action.newLocation(context, modelLocation);
+                            }else{
+
+                                if(ModelLocation.getLongitude() != location.getLongitude() ||
+                                        ModelLocation.getLatitude() != location.getLatitude()) {
+
+                                    ModelLocation.setLatitude(location.getLatitude());
+                                    ModelLocation.setLongitude(location.getLongitude());
+                                    action.overlapLocation(context, modelLocation);
+                                }
                             }
                         }
                     }

@@ -39,4 +39,10 @@ public class Controller {
         CCplaceTest dao = new CCplaceTest(context);
         dao.newLocation(location);
     }
+
+    public void overlapLocation(Context context, ModelLocation location){
+
+        CCplaceTest db = new CCplaceTest(context);
+        db.overlapLocation(location);
+    }
 }

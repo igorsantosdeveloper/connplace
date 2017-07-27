@@ -12,7 +12,7 @@ public class ModelLocation {
     }
 
     public static double getLatitude() {
-        return latitude;
+        return ModelLocation.latitude;
     }
 
     public static void setLatitude(double latitude) {
@@ -20,7 +20,7 @@ public class ModelLocation {
     }
 
     public static double getLongitude() {
-        return longitude;
+        return ModelLocation.longitude;
     }
 
     public static void setLongitude(double longitude) {
@@ -29,9 +29,5 @@ public class ModelLocation {
 
     public int getIdUser() {
         return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
     }
 }

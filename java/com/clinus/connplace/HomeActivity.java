@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity{
 
     private ListView users;
     private static boolean loggingIn;
+    ToLocate locate = new ToLocate(this);
 
     public static void setLoggingIn(boolean loggingIn){
 
@@ -38,5 +39,16 @@ public class HomeActivity extends AppCompatActivity{
         ArrayAdapter<String> adapterUsers =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dao.getUsers());
         users.setAdapter(adapterUsers);
+        new Thread(t1).start();
     }
+
+    private  Runnable t1 = new Runnable() {
+        public void run() {
+
+            while(true) {
+
+                locate.bringLocation();
+            }
+        }
+    };
 }

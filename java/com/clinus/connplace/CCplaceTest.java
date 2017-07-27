@@ -129,10 +129,20 @@ public class CCplaceTest extends SQLiteOpenHelper{
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(CCP_LOCATION_LATITUDE,location.getLatitude());
-        values.put(CCP_LOCATION_LONGITUDE,location.getLongitude());
+        values.put(CCP_LOCATION_LATITUDE,ModelLocation.getLatitude());
+        values.put(CCP_LOCATION_LONGITUDE,ModelLocation.getLongitude());
         values.put(CCP_LOCATION_USER_ID,location.getIdUser());
         db.insert(TABLE_CCP_LOCATION,null,values);
+        db.close();
+    }
+
+    public void overlapLocation(ModelLocation location){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(CCP_LOCATION_LATITUDE,ModelLocation.getLatitude());
+        values.put(CCP_LOCATION_LONGITUDE,ModelLocation.getLongitude());
+        db.update(TABLE_CCP_LOCATION,values,CCP_LOCATION_USER_ID + "=" + location.getIdUser(),null);
         db.close();
     }
 
