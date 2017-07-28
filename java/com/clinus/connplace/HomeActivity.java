@@ -1,5 +1,6 @@
 package com.clinus.connplace;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -35,11 +36,35 @@ public class HomeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         users = (ListView) findViewById(R.id.home_listuser);
-        CCplaceTest dao = new CCplaceTest(HomeActivity.this);
         ArrayAdapter<String> adapterUsers =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dao.getUsers());
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, createUserList());
         users.setAdapter(adapterUsers);
+        loggingIn = true;
         new Thread(t1).start();
+    }
+
+    private ArrayList<String> createUserList(){
+
+        double distance = 0;
+        ToLocate locate = new ToLocate();
+        Controller action = new Controller();
+        DynamicQuery sql = new DynamicQuery();
+        ArrayList<ModelLocation> locations = action.bringsLocations(this);
+        ArrayList<Integer> id_s = new ArrayList<>();
+        for(ModelLocation location : locations){
+
+            distance = locate.calculateDistance(
+                    ModelLocation.getUserLatitude(),
+                    ModelLocation.getUserLongitude(),
+                    location.getLatitude(),
+                    location.getLongitude()
+            );
+            if(distance <= 1000){
+                id_s.add(location.getIdUser());
+            }
+        }
+        String query = sql.createUserListQuery(id_s);
+        return action.forwardListOfUsers(this,query);
     }
 
     private  Runnable t1 = new Runnable() {

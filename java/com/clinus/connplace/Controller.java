@@ -2,6 +2,8 @@ package com.clinus.connplace;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 public class Controller {
 
     public void newUser(Context context,
@@ -44,5 +46,17 @@ public class Controller {
 
         CCplaceTest db = new CCplaceTest(context);
         db.overlapLocation(location);
+    }
+
+    public ArrayList<ModelLocation> bringsLocations(Context context){
+
+        CCplaceTest db = new CCplaceTest(context);
+        return db.bringsLocations();
+    }
+
+    public ArrayList<String> forwardListOfUsers(Context context, String query){
+
+        CCplaceTest db = new CCplaceTest(context);
+        return db.forwardListOfUsers(query);
     }
 }

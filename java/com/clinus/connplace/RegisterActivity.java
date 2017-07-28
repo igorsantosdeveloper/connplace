@@ -174,6 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (action.checkNameUser(RegisterActivity.this, editUserName.getText().toString()) == -1) {
 
                         finishRegistration();
+                        transfer();
                     } else {
 
                         showInvalid(msg.getExistingUser());
@@ -184,6 +185,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public static String getUser(){ return user; }
+
+    public static void setUser(String user){ RegisterActivity.user = user; }
 
     public void createElements(){
 
@@ -337,14 +340,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         user = editUserName.getText().toString().toUpperCase();
         mountNewUser();
-        transfer();
     }
 
     public void transfer(){
 
         ToLocate locate = new ToLocate(this);
-        locate.bringLocation();
         HomeActivity.setLoggingIn(false);
+        locate.bringLocation();
         Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
         startActivity(home);
     }

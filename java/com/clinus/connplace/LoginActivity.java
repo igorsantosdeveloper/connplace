@@ -93,8 +93,9 @@ public class LoginActivity extends AppCompatActivity{
     public void loginInto() {
 
         ToLocate locate = new ToLocate(this);
-        locate.bringLocation();
+        RegisterActivity.setUser(editName.getText().toString());
         HomeActivity.setLoggingIn(true);
+        locate.bringLocation();
         Intent home = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(home);
     }
