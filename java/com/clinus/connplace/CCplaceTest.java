@@ -77,7 +77,7 @@ public class CCplaceTest extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(CCP_USER_NAME,user.getName().toUpperCase());
         values.put(CCP_USER_PASSWORD,user.getPassword());
-        values.put(CCP_USER_AGE,user.getAge().toUpperCase());
+        values.put(CCP_USER_AGE,user.getStrAge().toUpperCase());
         values.put(CCP_USER_DATEOFBIRTH,user.getDateOfBirth().toUpperCase());
         values.put(CCP_USER_SEX,user.getSex().toUpperCase());
         db.insert(TABLE_CCP_USER,null,values);
@@ -199,8 +199,6 @@ public class CCplaceTest extends SQLiteOpenHelper{
 
             users.add(cursor.getString(0));
         }
-
-        System.out.println("TAMANHO DA LISTA" + users.size());
         return users;
     }
 

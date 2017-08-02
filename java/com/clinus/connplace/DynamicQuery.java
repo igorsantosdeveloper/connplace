@@ -1,28 +1,21 @@
 package com.clinus.connplace;
 
-import java.util.ArrayList;
-
 public class DynamicQuery {
 
-    public String createUserListQuery(ArrayList<Integer> id_s){
+    private String forwardListOfUsers;
 
-        String query = "SELECT USER_NAME FROM CCP_USER WHERE USER_ID=";//...
+    public DynamicQuery() {
+    }
 
-        if(id_s.size() > 0) {
+    public DynamicQuery(String forwardListOfUsers) {
+        this.forwardListOfUsers = forwardListOfUsers;
+    }
 
-            query += id_s.get(0);
-            if(id_s.size() > 1) {
+    public String getForwardListOfUsers() {
+        return forwardListOfUsers;
+    }
 
-                for (int i = 1;i < id_s.size();i++) {
-
-                    query += " OR USER_ID=" + id_s.get(i);
-                }
-            }
-        }else{
-
-            return null;
-        }
-        return query;
+    public void setForwardListOfUsers(String forwardListOfUsers) {
+        this.forwardListOfUsers = forwardListOfUsers;
     }
 }
-

@@ -7,6 +7,7 @@ public class ModelLocation {
     private double latitude;
     private double longitude;
     private int idUser;
+    private ModelUser user;
 
     public ModelLocation(int idUser) {
 
@@ -18,6 +19,14 @@ public class ModelLocation {
         this.latitude = latitude;
         this.longitude = longitude;
         this.idUser = idUser;
+
+    }
+
+    public ModelLocation(double latitude, double longitude, ModelUser user){
+
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.user = user;
     }
 
     public static double getUserLatitude() {

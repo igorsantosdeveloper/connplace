@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -336,10 +337,31 @@ public class RegisterActivity extends AppCompatActivity {
                 sex);
     }
 
+    public void newUser(){
+
+        String name = editUserName.getText().toString();
+        String password = editPassword.getText().toString();
+        int age = getAge(Integer.parseInt(txtDay.getText().toString()),
+                getMonth(),
+                Integer.parseInt(txtYear.getText().toString()));
+        String dateOfBirth = txtDay.getText().toString() + "/" +
+                getMonth() + "/" +
+                txtYear.getText().toString();
+        if(android.os.Build.VERSION.SDK_INT > 9){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        ClientService service = new ClientService();
+        service.newUser(new ModelUser(name,password,age,dateOfBirth,sex));
+    }
+
     public void finishRegistration(){
 
         user = editUserName.getText().toString().toUpperCase();
+        //SQLite
         mountNewUser();
+        //Service
+        newUser();
     }
 
     public void transfer(){

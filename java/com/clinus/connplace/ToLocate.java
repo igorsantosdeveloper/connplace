@@ -15,6 +15,7 @@ public class ToLocate {
     private Context context;
     private String userloggedIn;
     private FusedLocationProviderClient mFusedLocationClient;
+    private static boolean updatingList = false;
 
     public ToLocate(Context context) {
 
@@ -22,6 +23,10 @@ public class ToLocate {
     }
 
     public ToLocate(){}
+
+    public static void setUpdatingList(boolean updatingList){ ToLocate.updatingList = updatingList; }
+
+    public static boolean isUpdatingList(){ return ToLocate.updatingList; }
 
     public void bringLocation() {
 
@@ -59,6 +64,7 @@ public class ToLocate {
                                     ModelLocation.setUserLatitude(location.getLatitude());
                                     ModelLocation.setUserLongitude(location.getLongitude());
                                     action.overlapLocation(context, modelLocation);
+                                    updatingList = false;
                                 }
                             }
                         }
