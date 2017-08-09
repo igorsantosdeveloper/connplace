@@ -13,9 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 public class ToLocate {
 
     private Context context;
-    private String userloggedIn;
     private FusedLocationProviderClient mFusedLocationClient;
-    private static boolean updatingList = false;
 
     public ToLocate(Context context) {
 
@@ -24,11 +22,7 @@ public class ToLocate {
 
     public ToLocate(){}
 
-    public static void setUpdatingList(boolean updatingList){ ToLocate.updatingList = updatingList; }
-
-    public static boolean isUpdatingList(){ return ToLocate.updatingList; }
-
-    public void bringLocation() {
+    public void newLocation() {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -48,26 +42,46 @@ public class ToLocate {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
 
-                            Controller action = new Controller();
-                            userloggedIn = RegisterActivity.getUser();
-                            ModelLocation modelLocation = new ModelLocation(action.getIdUser(context,userloggedIn.toUpperCase()));
-                            if(!HomeActivity.isLoggingIn()) {
+                            ServiceController controller = new ServiceController();
+                            controller.newLocation(new ModelLocation(location.getLatitude(),
+                                    location.getLongitude(),
+                                    new ModelUser(HomeActivity.getIdUser())));
+                        }
+                    }
+                });
+    }
 
-                                ModelLocation.setUserLatitude(location.getLatitude());
-                                ModelLocation.setUserLongitude(location.getLongitude());
-                                action.newLocation(context, modelLocation);
-                            }else{
+    public void overlapLocation(){
 
-                                if(ModelLocation.getUserLongitude() != location.getLongitude() ||
-                                        ModelLocation.getUserLatitude() != location.getLatitude()) {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener((Activity) context, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
 
-                                    ModelLocation.setUserLatitude(location.getLatitude());
-                                    ModelLocation.setUserLongitude(location.getLongitude());
-                                    action.overlapLocation(context, modelLocation);
-                                    updatingList = false;
+                            ServiceController controller = new ServiceController();
+                            BringsCoordinates coordinates = controller.bringsCoordinates(HomeActivity.getIdUser());
+                            if(coordinates.getLatitude() != location.getLatitude() ||
+                                    coordinates.getLongitude() != location.getLongitude()) {
+
+                                    controller.overlapLocation(new ModelLocation(location.getLatitude(),
+                                            location.getLongitude(),
+                                            new ModelUser(HomeActivity.getIdUser())));
+                                    HomeActivity.setUpdatingList(true);
                                 }
                             }
-                        }
                     }
                 });
     }
@@ -102,6 +116,4 @@ public class ToLocate {
         c = Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return Math.round(r * c * 1000);
     }
-
-
 }

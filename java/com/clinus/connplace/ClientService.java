@@ -107,6 +107,37 @@ public class ClientService {
             httpClient.getConnectionManager().shutdown();
         }
     }
+
+    public int getUserId(String nameUser){
+
+        HttpClient httpClient = new DefaultHttpClient();
+        try{
+
+            HttpGet request = new HttpGet(
+                    ServiceHost.serviceHost + "user/checkNameUser" +
+                            "?" + "nameUser=" + nameUser);
+            request.addHeader("content-type","application/json");
+            request.addHeader("Accept","application/json");
+            HttpResponse response = httpClient.execute(request);
+            String json = EntityUtils.toString(response.getEntity());
+            Gson gson = new Gson();
+            ModelUser user = gson.fromJson(json, ModelUser.class);
+            if(user.getId() > -1){
+
+                return user.getId();
+            }else{
+
+                return -1;
+            }
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return -1;
+        }finally {
+
+            httpClient.getConnectionManager().shutdown();
+        }
+    }
     //End User
 
     //Location
@@ -156,7 +187,7 @@ public class ClientService {
         }
     }
 
-    public boolean bringsLocations() {
+    public List<BringsLocation> bringsLocations() {
 
         HttpClient httpClient = new DefaultHttpClient();
         Gson gson = new Gson();
@@ -169,18 +200,18 @@ public class ClientService {
             String json = EntityUtils.toString(response.getEntity());
             Type type = new TypeToken<ArrayList<BringsLocation>>(){}.getType();
             List<BringsLocation> locations = gson.fromJson(json, type);
-            return true;
+            return locations;
         }catch (Exception e){
 
             e.printStackTrace();
-            return false;
+            return null;
         }finally {
 
             httpClient.getConnectionManager().shutdown();
         }
     }
 
-    public boolean forwardListOfUsers(DynamicQuery dynamicQuery) {
+    public List<ForwardListOfUsers> forwardListOfUsers(DynamicQuery dynamicQuery) {
 
         HttpClient httpClient = new DefaultHttpClient();
         Gson gson = new Gson();
@@ -195,15 +226,36 @@ public class ClientService {
             String json = EntityUtils.toString(response.getEntity());
             Type type = new TypeToken<ArrayList<ForwardListOfUsers>>(){}.getType();
             List<ForwardListOfUsers> users = gson.fromJson(json, type);
-            for(ForwardListOfUsers user : users){
-
-                System.out.println(user);
-            }
-            return true;
+            return users;
         }catch (Exception e){
 
             e.printStackTrace();
-            return false;
+            return null;
+        }finally {
+
+            httpClient.getConnectionManager().shutdown();
+        }
+    }
+
+    public BringsCoordinates bringsCoordinates(int idUser){
+
+        HttpClient httpClient = new DefaultHttpClient();
+        try{
+
+            HttpGet request = new HttpGet(
+                    ServiceHost.serviceHost + "location/bringsCoordinates" +
+                            "?" + "idUser=" + idUser);
+            request.addHeader("content-type","application/json");
+            request.addHeader("Accept","application/json");
+            HttpResponse response = httpClient.execute(request);
+            String json = EntityUtils.toString(response.getEntity());
+            Gson gson = new Gson();
+            BringsCoordinates coordinates = gson.fromJson(json, BringsCoordinates.class);
+            return coordinates;
+        }catch (Exception e){
+
+            e.printStackTrace();
+            return null;
         }finally {
 
             httpClient.getConnectionManager().shutdown();

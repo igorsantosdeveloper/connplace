@@ -60,8 +60,8 @@ public class ModelLocation {
     @Override
     public String toString() {
         return "ModelLocation{" +
-                "latitude=" + userLatitude +
-                ", longitude=" + userLongitude +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
                 ", idUser=" + idUser +
                 '}';
     }

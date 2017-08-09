@@ -22,13 +22,6 @@ public class LoginActivity extends AppCompatActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        /*if(android.os.Build.VERSION.SDK_INT > 9){
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        ClientService service = new ClientService();
-        DynamicQuery dynamicQuery = new DynamicQuery("SELECT user_name AS nameUser FROM ccp_user WHERE user_id = 1 OR user_id = 2");
-        service.forwardListOfUsers(dynamicQuery);*/
         ToLocate locate = new ToLocate(this);
         createElements();
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -45,9 +38,8 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
 
-                Controller action = new Controller();
-                if (action.authenticateUser(LoginActivity.this,
-                        editName.getText().toString(), editPassword.getText().toString()) > -1) {
+                ServiceController controller = new ServiceController();
+                if (controller.authenticateUser(editName.getText().toString(), editPassword.getText().toString())) {
 
                     loginInto();
                 } else {
@@ -81,9 +73,10 @@ public class LoginActivity extends AppCompatActivity{
     public void loginInto() {
 
         ToLocate locate = new ToLocate(this);
-        RegisterActivity.setUser(editName.getText().toString());
-        HomeActivity.setLoggingIn(true);
-        locate.bringLocation();
+        ServiceController controller = new ServiceController();
+        HomeActivity.setNameUser(editName.getText().toString());
+        HomeActivity.setIdUser(controller.getUserId(HomeActivity.getNameUser()));
+        locate.overlapLocation();
         Intent home = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(home);
     }

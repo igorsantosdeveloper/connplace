@@ -171,11 +171,10 @@ public class RegisterActivity extends AppCompatActivity {
                     showInvalid(msg.getWeakPassword());
                 } else {
 
-                    Controller action = new Controller();
-                    if (action.checkNameUser(RegisterActivity.this, editUserName.getText().toString()) == -1) {
+                    ServiceController controller = new ServiceController();
+                    if (!controller.checkNameUser(editUserName.getText().toString())) {
 
                         finishRegistration();
-                        transfer();
                     } else {
 
                         showInvalid(msg.getExistingUser());
@@ -319,24 +318,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    public void mountNewUser(){
-
-        String dateOfBirth =    txtDay.getText().toString() + "/" +
-                getMonth() + "/" +
-                txtYear.getText().toString();
-        int age = getAge(   Integer.parseInt(txtDay.getText().toString()),
-                getMonth(),
-                Integer.parseInt(txtYear.getText().toString()));
-        String strAge = "" + age;
-        Controller action = new Controller();
-        action.newUser(  RegisterActivity.this,
-                editUserName.getText().toString(),
-                editPassword.getText().toString(),
-                strAge,
-                dateOfBirth,
-                sex);
-    }
-
     public void newUser(){
 
         String name = editUserName.getText().toString();
@@ -351,24 +332,18 @@ public class RegisterActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        ClientService service = new ClientService();
-        service.newUser(new ModelUser(name,password,age,dateOfBirth,sex));
+        ServiceController controller = new ServiceController();
+        controller.newUser(new ModelUser(name,password,age,dateOfBirth,sex));
     }
 
     public void finishRegistration(){
 
-        user = editUserName.getText().toString().toUpperCase();
-        //SQLite
-        mountNewUser();
-        //Service
         newUser();
-    }
-
-    public void transfer(){
-
+        ServiceController controller = new ServiceController();
         ToLocate locate = new ToLocate(this);
-        HomeActivity.setLoggingIn(false);
-        locate.bringLocation();
+        HomeActivity.setNameUser(editUserName.getText().toString());
+        HomeActivity.setIdUser(controller.getUserId(HomeActivity.getNameUser()));
+        locate.newLocation();
         Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
         startActivity(home);
     }
