@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity{
         ToLocate locate = new ToLocate(this);
         ServiceController controller = new ServiceController();
         HomeActivity.setNameUser(editName.getText().toString());
-        HomeActivity.setIdUser(controller.getUserId(HomeActivity.getNameUser()));
         locate.overlapLocation();
         Intent home = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(home);

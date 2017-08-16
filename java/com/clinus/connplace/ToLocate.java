@@ -43,9 +43,10 @@ public class ToLocate {
                         if (location != null) {
 
                             ServiceController controller = new ServiceController();
+                            controller.newUser(RegisterActivity.getModelUser());
                             controller.newLocation(new ModelLocation(location.getLatitude(),
                                     location.getLongitude(),
-                                    new ModelUser(HomeActivity.getIdUser())));
+                                    new ModelUser(controller.getUserId(HomeActivity.getNameUser()))));
                         }
                     }
                 });
@@ -72,14 +73,14 @@ public class ToLocate {
                         if (location != null) {
 
                             ServiceController controller = new ServiceController();
-                            BringsCoordinates coordinates = controller.bringsCoordinates(HomeActivity.getIdUser());
+                            int idUser = controller.getUserId(HomeActivity.getNameUser());
+                            BringsCoordinates coordinates = controller.bringsCoordinates(idUser);
                             if(coordinates.getLatitude() != location.getLatitude() ||
                                     coordinates.getLongitude() != location.getLongitude()) {
 
                                     controller.overlapLocation(new ModelLocation(location.getLatitude(),
                                             location.getLongitude(),
-                                            new ModelUser(HomeActivity.getIdUser())));
-                                    HomeActivity.setUpdatingList(true);
+                                            new ModelUser(idUser)));
                                 }
                             }
                     }

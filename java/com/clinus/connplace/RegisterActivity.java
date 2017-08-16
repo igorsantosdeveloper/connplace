@@ -60,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String[] strYears = new String[100];
     private final Message msg = new Message();
     private static String user;
+    private static ModelUser modelUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +188,14 @@ public class RegisterActivity extends AppCompatActivity {
     public static String getUser(){ return user; }
 
     public static void setUser(String user){ RegisterActivity.user = user; }
+
+    public static ModelUser getModelUser() {
+        return modelUser;
+    }
+
+    public static void setModelUser(ModelUser modelUser) {
+        RegisterActivity.modelUser = modelUser;
+    }
 
     public void createElements(){
 
@@ -332,17 +341,14 @@ public class RegisterActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        ServiceController controller = new ServiceController();
-        controller.newUser(new ModelUser(name,password,age,dateOfBirth,sex));
+        modelUser = new ModelUser(name,password,age,dateOfBirth,sex);
     }
 
     public void finishRegistration(){
 
         newUser();
-        ServiceController controller = new ServiceController();
+        HomeActivity.setNameUser(modelUser.getName());
         ToLocate locate = new ToLocate(this);
-        HomeActivity.setNameUser(editUserName.getText().toString());
-        HomeActivity.setIdUser(controller.getUserId(HomeActivity.getNameUser()));
         locate.newLocation();
         Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
         startActivity(home);

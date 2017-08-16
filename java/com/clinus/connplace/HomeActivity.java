@@ -16,7 +16,6 @@ public class HomeActivity extends AppCompatActivity{
     private ListView users;
     ToLocate locate = new ToLocate(this);
     private static String nameUser;
-    private static int idUser;
     private static boolean updatingList;
 
     public static boolean isUpdatingList() {
@@ -35,14 +34,6 @@ public class HomeActivity extends AppCompatActivity{
         HomeActivity.nameUser = nameUser;
     }
 
-    public static int getIdUser() {
-        return idUser;
-    }
-
-    public static void setIdUser(int idUser) {
-        HomeActivity.idUser = idUser;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,17 +41,13 @@ public class HomeActivity extends AppCompatActivity{
         setContentView(R.layout.activity_home);
         users = (ListView) findViewById(R.id.home_listuser);
         createList();
-        new Thread(){
+        /*new Thread(){
             public void run(){
 
                 while(true){
 
                     locate.overlapLocation();
-                    if(updatingList){
-
-                        updatingList = false;
-                        createList();
-                    }
+                    createList();
                     try {
                         sleep(1000 * 10);//Para por 10 segundos
                     } catch (InterruptedException e) {
@@ -68,7 +55,7 @@ public class HomeActivity extends AppCompatActivity{
                     }
                 }
             }
-        }.start();
+        }.start();*/
     }
 
     private ArrayList<String> prepareUserList(){
@@ -79,7 +66,7 @@ public class HomeActivity extends AppCompatActivity{
         DynamicCreateQuery sql = new DynamicCreateQuery();
         List<BringsLocation> locations = controller.bringsLocations();
         ArrayList<Integer> id_s = new ArrayList<>();
-        BringsCoordinates coordinates = controller.bringsCoordinates(HomeActivity.getIdUser());
+        BringsCoordinates coordinates = controller.bringsCoordinates(controller.getUserId(nameUser));
         for(BringsLocation location : locations){
 
             distance = locate.calculateDistance(

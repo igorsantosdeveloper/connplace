@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class CCplaceTest extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 18;
     private static final String DATABASE_NAME = "CCPLACE_TEST";
     private static final String TABLE_CCP_USER = "CCP_USER";
     private static final String CCP_USER_ID = "USER_ID";
@@ -168,6 +168,7 @@ public class CCplaceTest extends SQLiteOpenHelper{
                     cursor.getInt(3)
             ));
         }
+        System.out.println(locations.size());
         return locations;
     }
 
