@@ -350,8 +350,8 @@ public class RegisterActivity extends AppCompatActivity {
         HomeActivity.setNameUser(modelUser.getName());
         ToLocate locate = new ToLocate(this);
         locate.newLocation();
-        Intent home = new Intent(RegisterActivity.this, HomeActivity.class);
-        startActivity(home);
+        Intent login = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(login);
     }
 }
 

@@ -48,6 +48,7 @@ public class ClientService {
 
     public boolean authenticateUser(String nameUser, String passwordUser){
 
+
         HttpClient httpClient = new DefaultHttpClient();
         try{
 

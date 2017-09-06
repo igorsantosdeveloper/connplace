@@ -1,6 +1,5 @@
 package com.clinus.connplace;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -83,9 +82,11 @@ public class HomeActivity extends AppCompatActivity{
         ArrayList<String>users = new ArrayList<>();
         List<ForwardListOfUsers> listUsers = new ArrayList<>();
         listUsers = controller.forwardListOfUsers(dynamicQuery);
-        for(ForwardListOfUsers user : listUsers){
+        if(dynamicQuery.getForwardListOfUsers() != null) {
+            for (ForwardListOfUsers user : listUsers) {
 
-            users.add(user.getNameUser());
+                users.add(user.getNameUser());
+            }
         }
         return users;
     }
@@ -93,10 +94,18 @@ public class HomeActivity extends AppCompatActivity{
     public void createList(){
 
         ArrayList<String> listUsers = prepareUserList();
+        listUsers.remove(nameUser);
         if(listUsers != null) {
             ArrayAdapter<String> adapterUsers =
                     new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listUsers);
             users.setAdapter(adapterUsers);
         }
     }
+
+    private  Runnable t1 = new Runnable() {
+        public void run() {
+
+            createList();
+        }
+    };
 }
